@@ -17,21 +17,21 @@ ray job submit --address="http://127.0.0.1:8265" \
    --ref_num_nodes 1 \
    --ref_num_gpus_per_node 8 \
    --remote_rm_url examples/scripts/math_verifier.py \
-   --actor_num_nodes 2 \
+   --actor_num_nodes 1 \
    --actor_num_gpus_per_node 8 \
    --vllm_num_engines 1 \
    --vllm_tensor_parallel_size 8 \
    --vllm_enable_sleep \
-   --vllm_gpu_memory_utilization 0.8 \
+   --vllm_gpu_memory_utilization 0.7 \
    --vllm_sync_backend nccl \
    --enable_prefix_caching \
    --deepspeed_enable_sleep \
    --pretrain $PRETRAIN_MODEL \
    --save_path $SAVE_PATH/$MODEL_CPK_NAME \
    --micro_train_batch_size 1 \
-   --train_batch_size 16 \
+   --train_batch_size 8 \
    --micro_rollout_batch_size 1 \
-   --rollout_batch_size 32 \
+   --rollout_batch_size 16 \
    --temperature 1 \
    --n_samples_per_prompt 8 \
    --max_epochs 1 \
@@ -44,7 +44,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --adam_offload \
    --bf16 \
    --actor_learning_rate 1e-6 \
-   --init_kl_coef 0 \
+   --init_kl_coef 0.02 \
    --prompt_data $DATASET \
    --input_key prompt \
    --label_key answer \

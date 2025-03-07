@@ -50,7 +50,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --normalize_reward \
    --flash_attn \
    --gradient_checkpointing \
-   --save_steps 10 \
+   --save_steps 4 \
    --ckpt_path $SAVE_PATH/$MODEL_CPK_NAME/ckpt \
    --save_hf_ckpt 
 

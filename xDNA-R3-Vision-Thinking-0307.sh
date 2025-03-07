@@ -41,6 +41,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --generate_max_len 3000 \
    --advantage_estimator reinforce_baseline \
    --zero_stage 3 \
+   --adam_offload \
    --bf16 \
    --actor_learning_rate 1e-6 \
    --init_kl_coef 0 \

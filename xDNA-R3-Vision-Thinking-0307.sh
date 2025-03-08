@@ -24,7 +24,6 @@ ray job submit --address="http://127.0.0.1:8265" \
    --vllm_gpu_memory_utilization 0.85 \
    --vllm_sync_backend nccl \
    --enable_prefix_caching \
-   --trust_remote_code \
    --pretrain $PRETRAIN_MODEL \
    --save_path $SAVE_PATH/$MODEL_CPK_NAME \
    --micro_train_batch_size 1 \
@@ -41,6 +40,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --advantage_estimator reinforce_baseline \
    --zero_stage 3 \
    --adam_offload \
+   --adam_betas 0.9,0.999 \
    --bf16 \
    --actor_learning_rate 1e-6 \
    --init_kl_coef 0.02 \
@@ -52,7 +52,8 @@ ray job submit --address="http://127.0.0.1:8265" \
    --gradient_checkpointing \
    --save_steps 4 \
    --ckpt_path $SAVE_PATH/$MODEL_CPK_NAME/ckpt \
-   --save_hf_ckpt 
+   --save_hf_ckpt \
+   --use_wandb
 
    # for visual dataset
    # --train_vlm

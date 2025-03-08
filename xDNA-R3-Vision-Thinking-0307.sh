@@ -3,10 +3,9 @@ set -x
 # wget https://raw.githubusercontent.com/TideDra/lmm-r1/refs/heads/main/examples/data/mathlv345_8k_chatml.json
 # DATASET="/openrlhf/examples/test_scripts/mathlv345_8k_chatml.json"
 DATASET="/data/vayu/train/xDAN-RL-Training-GRPO/examples/data/xDAN-level5-math-aime-chatml.json"
-#PRETRAIN_MODEL="/data/vayu/train/models/xDAN-L3-VL-72b-RL-Base"
-PRETRAIN_MODEL="/data/vayu/train/models/InternVL2_5-38B-MPO"
+PRETRAIN_MODEL="/data/vayu/train/models/xDAN-L3-VL-72b-RL-Base"
 
-MODEL_CPK_NAME="xDAN-V2-RL-38B-0308"
+MODEL_CPK_NAME="xDAN-V2-RL-72B-0308"
 SAVE_PATH="/data/vayu/train/models/ckpts"
 mkdir -p "${SAVE_PATH}/${MODEL_CPK_NAME}"
 mkdir -p "${SAVE_PATH}/${MODEL_CPK_NAME}/logs"
@@ -18,15 +17,14 @@ ray job submit --address="http://127.0.0.1:8265" \
    --ref_num_nodes 1 \
    --ref_num_gpus_per_node 8 \
    --remote_rm_url examples/scripts/math_verifier.py \
-   --actor_num_nodes 1 \
+   --actor_num_nodes 2 \
    --actor_num_gpus_per_node 8 \
    --vllm_num_engines 1 \
    --vllm_tensor_parallel_size 8 \
-   --vllm_enable_sleep \
    --vllm_gpu_memory_utilization 0.85 \
    --vllm_sync_backend nccl \
    --enable_prefix_caching \
-   --deepspeed_enable_sleep \
+   --trust_remote_code \
    --pretrain $PRETRAIN_MODEL \
    --save_path $SAVE_PATH/$MODEL_CPK_NAME \
    --micro_train_batch_size 1 \

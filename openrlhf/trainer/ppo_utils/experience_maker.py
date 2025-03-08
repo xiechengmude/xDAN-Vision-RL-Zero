@@ -336,13 +336,17 @@ class NaiveExperienceMaker(ABC):
                 visual_inputs = None
 
             sequences, attention_mask, action_mask = self.actor.generate(**inputs, **generate_kwargs)
+            response_length = action_mask.float().sum(dim=-1)
+            # Add response lengths to the response_length_list
+            self.response_length_list.extend(response_length.tolist())
+            
             samples = Samples(
                 sequences=sequences,
                 attention_mask=attention_mask,
                 action_mask=action_mask,
                 num_actions=action_mask.size(1),
                 packed_seq_lens=None,
-                response_length=action_mask.float().sum(dim=-1),
+                response_length=response_length,
                 total_length=attention_mask.float().sum(dim=-1),
                 prompts=prompts,
                 visual_inputs=visual_inputs,
@@ -961,6 +965,10 @@ class RemoteExperienceMaker(NaiveExperienceMaker):
                     visual_inputs.pop("input_ids")
                     visual_inputs.pop("attention_mask")
                     visual_inputs = {k: v.to("cuda") for k, v in visual_inputs.items()}
+                response_length = action_mask.float().sum(dim=-1)
+                # Add response lengths to the response_length_list
+                self.response_length_list.extend(response_length.tolist())
+                
                 samples_list.append(
                     Samples(
                         sequences=sequences,
@@ -968,7 +976,7 @@ class RemoteExperienceMaker(NaiveExperienceMaker):
                         action_mask=action_mask,
                         num_actions=action_mask.size(1),
                         packed_seq_lens=None,
-                        response_length=action_mask.float().sum(dim=-1),
+                        response_length=response_length,
                         total_length=attention_mask.float().sum(dim=-1),
                         prompts=prompts,
                         visual_inputs=visual_inputs,
@@ -1014,6 +1022,9 @@ class RemoteExperienceMaker(NaiveExperienceMaker):
                 action_mask = None
                 response_length = torch.tensor(num_actions, device="cuda", dtype=torch.float)
                 total_length = torch.tensor(packed_seq_lens, device="cuda", dtype=torch.float)
+                
+                # Add response lengths to the response_length_list
+                self.response_length_list.extend(response_length.tolist())
                 # Collect for visual input
                 visual_inputs = None
                 if self.data_processor is not None:

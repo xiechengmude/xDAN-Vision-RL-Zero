@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 # wget https://raw.githubusercontent.com/TideDra/lmm-r1/refs/heads/main/examples/data/mathlv345_8k_chatml.json
-# DATASET="/openrlhf/examples/test_scripts/mathlv345_8k_chatml.json"
-DATASET="/data/vayu/train/xDAN-RL-Training-GRPO/examples/data/xDAN-level5-math-aime-chatml.json"
+DATASET="examples/data/mathlv345_8k_chatml_1p.json"
+#DATASET="/data/vayu/train/xDAN-RL-Training-GRPO/examples/data/xDAN-level5-math-aime-chatml.json"
 PRETRAIN_MODEL="/data/vayu/train/models/xDAN-L3-VL-72b-RL-Base"
 
 MODEL_CPK_NAME="xDAN-V2-RL-72B-0308"

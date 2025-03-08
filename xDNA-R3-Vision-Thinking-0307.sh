@@ -52,7 +52,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --save_steps 4 \
    --ckpt_path $SAVE_PATH/$MODEL_CPK_NAME/ckpt \
    --save_hf_ckpt \
-   --use_wandb
+   --use_wandb 1b2653c58df0ccf5b38f3ffa1bf21b78d48fd620
 
    # for visual dataset
    # --train_vlm

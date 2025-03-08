@@ -27,9 +27,9 @@ ray job submit --address="http://127.0.0.1:8265" \
    --pretrain $PRETRAIN_MODEL \
    --save_path $SAVE_PATH/$MODEL_CPK_NAME \
    --micro_train_batch_size 1 \
-   --train_batch_size 8 \
+   --train_batch_size 32 \
    --micro_rollout_batch_size 1 \
-   --rollout_batch_size 16 \
+   --rollout_batch_size 64 \
    --temperature 1 \
    --n_samples_per_prompt 8 \
    --max_epochs 2 \
